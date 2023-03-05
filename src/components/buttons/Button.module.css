@@ -1,0 +1,15 @@
+.button {
+    width: 110px;
+    height: 40px;
+    padding: 5px;
+    background: cornflowerblue;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    color: aliceblue;
+}
+
+.disable {
+    background: #9ba6b9;
+}

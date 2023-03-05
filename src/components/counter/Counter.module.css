@@ -1,0 +1,13 @@
+.counter {
+    padding: 20px;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 40px;
+    color: aliceblue;
+}
+
+.maxValue {
+    font-size: 40px;
+    color: #bb4545;
+}
