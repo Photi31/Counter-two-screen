@@ -5,8 +5,8 @@ export type ButtonPropsType = {
     id: string
     name: string
     condition: string
-    incrementCounter: () => void
-    resetCounter: () => void
+    incrementCounter?: () => void
+    resetCounter?: () => void
 }
 
 export const Button = (props: ButtonPropsType) => {
@@ -18,10 +18,14 @@ export const Button = (props: ButtonPropsType) => {
     const ocClickHandler = (event: MouseEvent<HTMLButtonElement>) => {
         console.log(event.currentTarget.name)
         if (event.currentTarget.name === 'INC') {
-            props.incrementCounter()
+            if(props.incrementCounter) {
+                props.incrementCounter()
+            }
         }
         if (event.currentTarget.name === 'RESET') {
-            props.resetCounter()
+            if (props.resetCounter) {
+                props.resetCounter()
+            }
         }
     }
 

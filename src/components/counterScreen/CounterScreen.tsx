@@ -1,11 +1,11 @@
 import React from 'react';
-import s from './Counter.module.css'
+import s from './CounterScreen.module.css'
 
 type CounterPropsType = {
     counter:number
 }
 
-export const Counter = (props: CounterPropsType) => {
+export const CounterScreen = (props: CounterPropsType) => {
 
     const finishStyleCounter = props.counter !== 5 ?
                                 s.counter :

@@ -4,8 +4,8 @@ import {Button} from "./Button";
 
 type ButtonsPropsType = {
     buttons: {id: string, name: string, condition: string}[]
-    incrementCounter: () => void
-    resetCounter: () => void
+    incrementCounter?: () => void
+    resetCounter?: () => void
 }
 
 export const Buttons = (props:ButtonsPropsType) => {
