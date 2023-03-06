@@ -2,12 +2,12 @@ import React from 'react';
 import s from './CounterScreen.module.css'
 
 type CounterPropsType = {
-    counter:number
+    counter: string
 }
 
 export const CounterScreen = (props: CounterPropsType) => {
 
-    const finishStyleCounter = props.counter !== 5 ?
+    const finishStyleCounter = props.counter !== '5' ?
                                 s.counter :
                                 s.counter + ' ' + s.maxValue
 

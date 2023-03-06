@@ -1,6 +1,13 @@
 .App {
-  width: 250px;
   margin: 100px auto;
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.setBlock {
+  width: 250px;
   border: 4px solid cornflowerblue;
   background: #b8ccef;
   border-radius: 5px;
