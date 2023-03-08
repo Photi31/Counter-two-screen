@@ -9,15 +9,12 @@ import {v1} from "uuid";
 
 function App() {
 
-    const initialMinValue = 0
-    const initialMaxValue = 0
-
-    let [maxValue, setMaxValue] = useState(initialMaxValue)
-    let [minValue, setMinValue] = useState(initialMinValue)
-    let [counterStart, setCounterStart] = useState(String(initialMinValue))
-    let [counterFinish, setCounterFinish] = useState(String(initialMaxValue))
-    let [startValue, setStartValue]= useState(initialMinValue)
-    let [finishValue, setFinishValue] = useState(initialMaxValue)
+    let [maxValue, setMaxValue] = useState(Number(localStorage.getItem('maxValue')) || 5)
+    let [minValue, setMinValue] = useState(Number(localStorage.getItem('minValue')) || 0)
+    let [counterStart, setCounterStart] = useState(localStorage.getItem('counterStart') || '0')
+    let [counterFinish, setCounterFinish] = useState(localStorage.getItem('counterFinish') || '5')
+    let [startValue, setStartValue]= useState(Number(localStorage.getItem('startValue')) || 0)
+    let [finishValue, setFinishValue] = useState(Number(localStorage.getItem('finishValue')) || 5)
 
     const buttons = {
     forCounterScreen: [{id: v1(), name: 'INC', condition: 'active'},
@@ -52,25 +49,36 @@ function App() {
     const incrementCounter = () => {
         if (+counterStart < +counterFinish) {
             let count = +counterStart
-            setCounterStart(String(++count))
+            count++
+            localStorage.setItem('counterStart', String(count))
+            setCounterStart(String(count))
         }
     }
 
     const resetCounter = () => {
-        setCounterStart(String(minValue))
+        localStorage.setItem('counterStart', String(startValue))
+        setCounterStart(String(startValue))
     }
 
     const changeValue = (num: string, id: string) => {
         if (id === 'maxValue') {
-            setMaxValue(+num)
+            let value = +num
+            localStorage.setItem('maxValue', `${value}`)
+            setMaxValue(value)
         }
         if (id === 'minValue') {
-            setMinValue(+num)
+            let value = +num
+            localStorage.setItem('minValue', `${value}`)
+            setMinValue(value)
         }
     }
 
     const setCounter = () => {
         buttonsForSetScreen[0].condition = 'disable'
+        localStorage.setItem('counterStart', String(minValue))
+        localStorage.setItem('startValue', String(minValue))
+        localStorage.setItem('counterFinish', String(maxValue))
+        localStorage.setItem('finishValue', String(maxValue))
         setCounterStart(String(minValue))
         setStartValue(minValue)
         setCounterFinish(String(maxValue))
