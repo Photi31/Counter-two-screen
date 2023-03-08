@@ -9,12 +9,15 @@ import {v1} from "uuid";
 
 function App() {
 
-    let [maxValue, setMaxValue] = useState(5)
-    let [minValue, setMinValue] = useState(0)
-    let [counterStart, setCounterStart] = useState('0')
-    let [counterFinish, setCounterFinish] = useState('5')
-    let [startValue, setStartValue]= useState(0)
-    let [finishValue, setFinishValue] = useState(5)
+    const initialMinValue = 0
+    const initialMaxValue = 0
+
+    let [maxValue, setMaxValue] = useState(initialMaxValue)
+    let [minValue, setMinValue] = useState(initialMinValue)
+    let [counterStart, setCounterStart] = useState(String(initialMinValue))
+    let [counterFinish, setCounterFinish] = useState(String(initialMaxValue))
+    let [startValue, setStartValue]= useState(initialMinValue)
+    let [finishValue, setFinishValue] = useState(initialMaxValue)
 
     const buttons = {
     forCounterScreen: [{id: v1(), name: 'INC', condition: 'active'},
