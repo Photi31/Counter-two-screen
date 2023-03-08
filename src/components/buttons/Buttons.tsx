@@ -6,6 +6,7 @@ type ButtonsPropsType = {
     buttons: {id: string, name: string, condition: string}[]
     incrementCounter?: () => void
     resetCounter?: () => void
+    setCounter?: () => void
 }
 
 export const Buttons = (props:ButtonsPropsType) => {
@@ -16,7 +17,8 @@ export const Buttons = (props:ButtonsPropsType) => {
                                               name={btn.name}
                                               condition={btn.condition}
                                               incrementCounter={props.incrementCounter}
-                                              resetCounter={props.resetCounter}/>
+                                              resetCounter={props.resetCounter}
+                                              setCounter={props.setCounter}/>
             )}
         </div>
     )

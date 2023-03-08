@@ -7,6 +7,7 @@ export type ButtonPropsType = {
     condition: string
     incrementCounter?: () => void
     resetCounter?: () => void
+    setCounter?: () => void
 }
 
 export const Button = (props: ButtonPropsType) => {
@@ -25,6 +26,11 @@ export const Button = (props: ButtonPropsType) => {
         if (event.currentTarget.name === 'RESET') {
             if (props.resetCounter) {
                 props.resetCounter()
+            }
+        }
+        if (event.currentTarget.name === 'SET') {
+            if (props.setCounter) {
+                props.setCounter()
             }
         }
     }
