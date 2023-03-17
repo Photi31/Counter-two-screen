@@ -1,0 +1,12 @@
+.message {
+    padding: 38px 10px;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 24px;
+    color: aliceblue;
+}
+
+.error {
+    color: #bb4545;
+}

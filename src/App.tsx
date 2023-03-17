@@ -4,7 +4,7 @@ import {CounterScreen} from "./components/counterScreen/CounterScreen";
 import {SetScreen} from "./components/setScreen/SetScreen";
 import {Buttons} from "./components/buttons/Buttons";
 import {v1} from "uuid";
-
+import {MessageScreen} from "./components/messageScreen/MessageScreen";
 
 
 function App() {
@@ -13,13 +13,15 @@ function App() {
     let [minValue, setMinValue] = useState(Number(localStorage.getItem('minValue')) || 0)
     let [counterStart, setCounterStart] = useState(localStorage.getItem('counterStart') || '0')
     let [counterFinish, setCounterFinish] = useState(localStorage.getItem('counterFinish') || '5')
-    let [startValue, setStartValue]= useState(Number(localStorage.getItem('startValue')) || 0)
+    let [startValue, setStartValue] = useState(Number(localStorage.getItem('startValue')) || 0)
     let [finishValue, setFinishValue] = useState(Number(localStorage.getItem('finishValue')) || 5)
+    const [message, setMessage] = useState('') //'value can be set'
+    //incorrect value
 
     const buttons = {
-    forCounterScreen: [{id: v1(), name: 'INC', condition: 'active'},
-                       {id: v1(), name: 'RESET', condition: 'active'}],
-    forSetScreen: [{id: v1(), name: 'SET', condition: 'disable'}]
+        forCounterScreen: [{id: v1(), name: 'INC', condition: 'active'},
+            {id: v1(), name: 'RESET', condition: 'active'}],
+        forSetScreen: [{id: v1(), name: 'SET', condition: 'disable'}]
     }
 
     let buttonsForCounterScreen = [...buttons['forCounterScreen']]
@@ -29,16 +31,27 @@ function App() {
         && minValue >= 0
         && maxValue > minValue
         && (maxValue !== finishValue
-        || minValue !== startValue)
+            || minValue !== startValue)
     ) {
         buttonsForSetScreen[0].condition = 'active'
     }
 
-    if (counterStart === counterFinish) {
-        buttonsForCounterScreen[0].condition = 'disable'
-    } else {
-        buttonsForCounterScreen[0].condition = 'active'
+    if (buttonsForSetScreen[0].condition === 'active'
+        && (!message || message !== 'value can be set')) {
+        console.log('set active')
+        setMessage('value can be set')
     }
+    if (buttonsForSetScreen[0].condition === 'disable' && message
+        && message !== 'incorrect value') {
+        console.log('set disable')
+        setMessage('incorrect value')
+    }
+
+        if (counterStart === counterFinish) {
+            buttonsForCounterScreen[0].condition = 'disable'
+        } else {
+            buttonsForCounterScreen[0].condition = 'active'
+        }
 
     if (+counterStart !== startValue) {
         buttonsForCounterScreen[1].condition = 'active'
@@ -54,12 +67,10 @@ function App() {
             setCounterStart(String(count))
         }
     }
-
     const resetCounter = () => {
         localStorage.setItem('counterStart', String(startValue))
         setCounterStart(String(startValue))
     }
-
     const changeValue = (num: string, id: string) => {
         if (id === 'maxValue') {
             let value = +num
@@ -72,7 +83,6 @@ function App() {
             setMinValue(value)
         }
     }
-
     const setCounter = () => {
         buttonsForSetScreen[0].condition = 'disable'
         localStorage.setItem('counterStart', String(minValue))
@@ -83,6 +93,7 @@ function App() {
         setStartValue(minValue)
         setCounterFinish(String(maxValue))
         setFinishValue(maxValue)
+        setMessage('')
     }
 
     return (
@@ -95,7 +106,10 @@ function App() {
                          setCounter={setCounter}/>
             </div>
             <div className={s.setBlock}>
-                <CounterScreen counterStart={counterStart} counterFinish={counterFinish}/>
+                {message ?
+                    <MessageScreen message={message}/> :
+                    <CounterScreen counterStart={counterStart}
+                                   counterFinish={counterFinish}/>}
                 <Buttons buttons={buttonsForCounterScreen}
                          incrementCounter={incrementCounter}
                          resetCounter={resetCounter}/>

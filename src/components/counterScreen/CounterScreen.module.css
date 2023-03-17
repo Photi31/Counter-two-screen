@@ -10,3 +10,15 @@
 .maxValue {
     color: #bb4545;
 }
+
+.message {
+    height: 107px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.error {
+    color: #bb4545;
+}
