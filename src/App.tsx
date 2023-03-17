@@ -15,8 +15,7 @@ function App() {
     let [counterFinish, setCounterFinish] = useState(localStorage.getItem('counterFinish') || '5')
     let [startValue, setStartValue] = useState(Number(localStorage.getItem('startValue')) || 0)
     let [finishValue, setFinishValue] = useState(Number(localStorage.getItem('finishValue')) || 5)
-    const [message, setMessage] = useState('') //'value can be set'
-    //incorrect value
+    let [message, setMessage] = useState('') //'value can be set / incorrect value
 
     const buttons = {
         forCounterScreen: [{id: v1(), name: 'INC', condition: 'active'},
@@ -38,16 +37,15 @@ function App() {
 
     if (buttonsForSetScreen[0].condition === 'active'
         && (!message || message !== 'value can be set')) {
-        console.log('set active')
         setMessage('value can be set')
     }
-    if (buttonsForSetScreen[0].condition === 'disable' && message
+    if (buttonsForSetScreen[0].condition === 'disable'
+        && message
         && message !== 'incorrect value') {
-        console.log('set disable')
         setMessage('incorrect value')
     }
 
-        if (counterStart === counterFinish) {
+        if (counterStart === counterFinish || message) {
             buttonsForCounterScreen[0].condition = 'disable'
         } else {
             buttonsForCounterScreen[0].condition = 'active'
