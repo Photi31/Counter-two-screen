@@ -13,7 +13,8 @@ export const Buttons = (props:ButtonsPropsType) => {
 
     return (
         <div className={s.buttons}>
-            {props.buttons.map(btn => <Button id={btn.id}
+            {props.buttons.map(btn => <Button key={btn.id}
+                                              id={btn.id}
                                               name={btn.name}
                                               condition={btn.condition}
                                               incrementCounter={props.incrementCounter}
