@@ -17,6 +17,10 @@ export const Button = (props: ButtonPropsType) => {
                             s.button + ' ' + s.disable
 
     const ocClickHandler = (event: MouseEvent<HTMLButtonElement>) => {
+        if(props.condition !== 'active') {
+            return
+        }
+
         console.log(event.currentTarget.name)
         if (event.currentTarget.name === 'INC') {
             if(props.incrementCounter) {
@@ -38,7 +42,7 @@ export const Button = (props: ButtonPropsType) => {
     return <button className={finishButtonStyle}
                    id={props.id}
                    name={props.name}
-                   onClick={props.condition === 'active' ? ocClickHandler : ()=>{}}>
+                   onClick={ocClickHandler}>
                 {props.name}
            </button>
 

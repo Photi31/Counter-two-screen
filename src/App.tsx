@@ -6,32 +6,47 @@ import {Buttons} from "./components/buttons/Buttons";
 import {v1} from "uuid";
 import {MessageScreen} from "./components/messageScreen/MessageScreen";
 
+type CounterKeyType = 'maxValue' | 'minValue' | 'counterStart' | 'counterFinish' | 'startValue' | 'finishValue'
+
+const getFormLs = (key: string): string | null => {
+   return  localStorage.getItem(key)
+}
+
+const restoreCounterValueFromLs = (key: CounterKeyType): number => {
+    const valueFormLs = getFormLs(key)
+    return valueFormLs === null ? 0 : Number(valueFormLs)
+}
+
 
 function App() {
 
-    let [maxValue, setMaxValue] = useState(Number(localStorage.getItem('maxValue')) || 5)
-    let [minValue, setMinValue] = useState(Number(localStorage.getItem('minValue')) || 0)
-    let [counterStart, setCounterStart] = useState(localStorage.getItem('counterStart') || '0')
-    let [counterFinish, setCounterFinish] = useState(localStorage.getItem('counterFinish') || '5')
-    let [startValue, setStartValue] = useState(Number(localStorage.getItem('startValue')) || 0)
-    let [finishValue, setFinishValue] = useState(Number(localStorage.getItem('finishValue')) || 5)
+    let [maxValue, setMaxValue] = useState(restoreCounterValueFromLs('maxValue'))
+    let [minValue, setMinValue] = useState(restoreCounterValueFromLs('minValue'))
+    let [counterStart, setCounterStart] = useState(restoreCounterValueFromLs('counterStart'))
+    let [counterFinish, setCounterFinish] = useState(restoreCounterValueFromLs('counterFinish'))
+    let [startValue, setStartValue] = useState(restoreCounterValueFromLs('startValue'))
+    let [finishValue, setFinishValue] = useState(restoreCounterValueFromLs('finishValue'))
     let [message, setMessage] = useState('') //'value can be set / incorrect value
 
-    const buttons = {
-        forCounterScreen: [{id: v1(), name: 'INC', condition: 'active'},
-            {id: v1(), name: 'RESET', condition: 'active'}],
-        forSetScreen: [{id: v1(), name: 'SET', condition: 'disable'}]
-    }
 
-    let buttonsForCounterScreen = [...buttons['forCounterScreen']]
-    let buttonsForSetScreen = [...buttons['forSetScreen']]
+    const counterButtons = [
+        {id: v1(), name: 'INC', condition: 'active'},
+        {id: v1(), name: 'RESET', condition: 'active'}
+    ]
+    const setButtons = [
+        {id: v1(), name: 'SET', condition: 'disable'}
+    ]
 
-    if (maxValue > 0
+    const isSetButtonActive = (maxValue > 0
         && minValue >= 0
         && maxValue > minValue
         && (maxValue !== finishValue
-            || minValue !== startValue)
-    ) {
+            || minValue !== startValue))
+
+    let buttonsForCounterScreen = [...counterButtons]
+    let buttonsForSetScreen = [...setButtons]
+
+    if (isSetButtonActive) {
         buttonsForSetScreen[0].condition = 'active'
     }
 
@@ -51,23 +66,23 @@ function App() {
             buttonsForCounterScreen[0].condition = 'active'
         }
 
-    if (+counterStart !== startValue) {
+    if (counterStart !== startValue) {
         buttonsForCounterScreen[1].condition = 'active'
     } else {
         buttonsForCounterScreen[1].condition = 'disable'
     }
 
     const incrementCounter = () => {
-        if (+counterStart < +counterFinish) {
-            let count = +counterStart
+        if (counterStart < +counterFinish) {
+            let count = counterStart
             count++
             localStorage.setItem('counterStart', String(count))
-            setCounterStart(String(count))
+            setCounterStart(count)
         }
     }
     const resetCounter = () => {
         localStorage.setItem('counterStart', String(startValue))
-        setCounterStart(String(startValue))
+        setCounterStart(startValue)
     }
     const changeValue = (num: string, id: string) => {
         if (id === 'maxValue') {
@@ -87,9 +102,9 @@ function App() {
         localStorage.setItem('startValue', String(minValue))
         localStorage.setItem('counterFinish', String(maxValue))
         localStorage.setItem('finishValue', String(maxValue))
-        setCounterStart(String(minValue))
+        setCounterStart(minValue)
         setStartValue(minValue)
-        setCounterFinish(String(maxValue))
+        setCounterFinish(maxValue)
         setFinishValue(maxValue)
         setMessage('')
     }

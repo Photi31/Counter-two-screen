@@ -2,8 +2,8 @@ import React from 'react';
 import s from './CounterScreen.module.css'
 
 type CounterPropsType = {
-    counterStart: string
-    counterFinish: string
+    counterStart: number
+    counterFinish: number
 
 }
 
